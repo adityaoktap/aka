@@ -1,0 +1,90 @@
+def partition(array, low, high):
+
+    # Select the pivot element
+    pivot = array[high]
+    i = low - 1
+
+    # Put the elements smaller than pivot on the left and greater 
+    #than pivot on the right of pivot
+    for j in range(low, high):
+        if array[j] <= pivot:
+            i = i + 1
+            (array[i], array[j]) = (array[j], array[i])
+
+    (array[i + 1], array[high]) = (array[high], array[i + 1])
+
+    return i + 1
+
+
+def quickSort(array, low, high):
+    if low < high:
+
+        # Select pivot position and put all the elements smaller 
+        # than pivot on left and greater than pivot on right
+        pi = partition(array, low, high)
+
+        # Sort the elements on the left of pivot
+        quickSort(array, low, pi - 1)
+
+        # Sort the elements on the right of pivot
+        quickSort(array, pi + 1, high)
+
+
+data = [8, 7, 2, 1, 0, 9, 6, 3]
+size = len(data)
+quickSort(data, 0, size - 1)
+print('Sorted Array in Ascending Order:')
+print(data)
+def mergeSort(array):
+    if len(array) > 1:
+
+        #  r is the point where the array is divided into two subarrays
+        r = len(array)//2
+        L = array[:r]
+        M = array[r:]
+
+        # Sort the two halves
+        mergeSort(L)
+        mergeSort(M)
+
+        i = j = k = 0
+
+        # Until we reach either end of either L or M, pick larger among
+        # elements L and M and place them in the correct position at A[p..r]
+        while i < len(L) and j < len(M):
+            if L[i] < M[j]:
+                array[k] = L[i]
+                i += 1
+            else:
+                array[k] = M[j]
+                j += 1
+            k += 1
+
+        # When we run out of elements in either L or M,
+        # pick up the remaining elements and put in A[p..r]
+        while i < len(L):
+            array[k] = L[i]
+            i += 1
+            k += 1
+
+        while j < len(M):
+            array[k] = M[j]
+            j += 1
+            k += 1
+
+
+# Print the array
+def printList(array):
+    for i in range(len(array)):
+        print(array[i], end=" ")
+    print()
+
+
+# Driver program
+if _name_ == '_main_':
+    array = [6, 5, 12, 10, 9, 1]
+
+    mergeSort(array)
+
+    print("Sorted array is: ")
+    printList(array)
